@@ -11,9 +11,11 @@ class Animal:
         Animal.add_alive(self)
 
     @classmethod
-    def isdead(cls, inst: Animal) -> None:
+    def isdead(cls, inst: Animal) -> bool:
         if inst.health <= 0:
             cls.alive = [animal for animal in cls.alive if animal != inst]
+            return True
+        return False
 
     @classmethod
     def add_alive(cls, inst: Animal) -> None:
@@ -34,7 +36,7 @@ class Herbivore(Animal):
 
 class Carnivore(Animal):
     def bite(self, victim: Herbivore) -> None:
-        if not victim.hidden and isinstance(victim, Herbivore):
+        if isinstance(victim, Herbivore) and not victim.hidden:
             victim.health -= 50
 
         Animal.isdead(victim)
